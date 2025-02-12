@@ -1,7 +1,0 @@
-{
-  "name": "TracaInnoFaso",
-  "integrations": {
-    "capacitor": {}
-  },
-  "type": "angular-standalone"
-}
