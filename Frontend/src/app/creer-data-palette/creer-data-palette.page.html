@@ -1,0 +1,61 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Label Generator</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <form [formGroup]="labelForm" (ngSubmit)="generateLabel()">
+    <ion-item>
+      <ion-label position="floating">SSCC</ion-label>
+      <ion-input formControlName="sscc" type="text"></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label position="floating">Content GTIN</ion-label>
+      <ion-input formControlName="content_gtin" type="text"></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label position="floating">Batch</ion-label>
+      <ion-input formControlName="batch" type="text"></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label position="floating">Description</ion-label>
+      <ion-input formControlName="description" type="text"></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label position="floating">Expiry Date</ion-label>
+      <ion-input formControlName="expiry_date" type="date"></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label position="floating">Product Date</ion-label>
+      <ion-input formControlName="prod_date" type="date"></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label position="floating">Quantity</ion-label>
+      <ion-input formControlName="quantity" type="number"></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label position="floating">Order Number</ion-label>
+      <ion-input formControlName="order_number" type="text"></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label position="floating">Number Part Cust</ion-label>
+      <ion-input formControlName="number_part_cust" type="text"></ion-input>
+    </ion-item>
+
+    <ion-button expand="full" type="submit" [disabled]="labelForm.invalid">Generate Label</ion-button>
+  
+  </form>
+  
+</ion-content>
+
+
+
