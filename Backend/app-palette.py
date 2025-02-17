@@ -74,10 +74,10 @@ def generate_label():
     label.paste(dm_image, (100, LABEL_HEIGHT - dm_size - 15))
 
     img_io = io.BytesIO()
-    label.save(img_io, 'PDF', resolution=100.0)
+    label.save(img_io, 'PNG', resolution=100.0)
     img_io.seek(0)
 
-    return send_file(img_io, mimetype='application/pdf', as_attachment=True, download_name="Etiquette-palette.pdf")
+    return send_file(img_io, mimetype='application/png', as_attachment=True, download_name="Etiquette-palette.png")
 
 if __name__ == '__main__':
     app.run(debug=True, host='127.0.0.1', port=5000)

@@ -54,6 +54,16 @@
     <ion-button expand="full" type="submit" [disabled]="labelForm.invalid">Generate Label</ion-button>
   
   </form>
+
+  <!--Affichage de l'image de l'étiquette -->
+  <div *ngIf="imageUrl" style="margin-top: 20px; text-align: center;">
+    <h2>Image de l'étiquette</h2>
+    <img [src]="imageUrl" alt="">
+  </div>
+
+  <div *ngIf="imageUrl"  style="margin-top: 20px; text-align: center;">
+    <ion-button (click)=" downloadLabel()">Télécharger en PDF</ion-button>
+  </div>
   
 </ion-content>
 
