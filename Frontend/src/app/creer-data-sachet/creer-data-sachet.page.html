@@ -1,13 +1,32 @@
 <ion-header [translucent]="true">
   <ion-toolbar>
-    <ion-title>creerDataSachet</ion-title>
+    <ion-title>Créer DataMatrix Sachet</ion-title>
   </ion-toolbar>
 </ion-header>
 
-<ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">creerDataSachet</ion-title>
-    </ion-toolbar>
-  </ion-header>
+<ion-content class="ion-padding">
+  <form (submit)="generateDataMatrix()">
+    <ion-item>
+      <ion-label position="floating">GTIN</ion-label>
+      <ion-input [(ngModel)]="sachet.gtin" name="gtin" required [ngModelOptions]="{standalone: true}"></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label position="floating">Batch</ion-label>
+      <ion-input [(ngModel)]="sachet.batch" name="batch" required [ngModelOptions]="{standalone: true}"></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label position="floating">Expiry Date (JJ/MM/AA)</ion-label>
+      <ion-input [(ngModel)]="sachet.expiry_date" name="expiry_date" required [ngModelOptions]="{standalone: true}"></ion-input>
+    </ion-item>
+
+    <ion-button expand="full" type="submit">Générer la DataMatrix</ion-button>
+  </form>
+
+  <div *ngIf="imageUrl">
+    <h3>Aperçu de la DataMatrix</h3>
+    <img [src]="imageUrl" alt="Datamatrix générée">
+    <ion-button expand="full" (click)="downloadImage()">Télécharger la DataMatrix</ion-button>
+  </div>
 </ion-content>

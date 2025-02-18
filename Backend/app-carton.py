@@ -10,7 +10,7 @@ CORS(app)
 LABEL_WIDTH = int(74 * 11.81)  # 74 mm en pixels
 LABEL_HEIGHT = int(105 * 11.81)  # 105 mm en pixels
 
-@app.route('/generate-label', methods=['POST'])
+@app.route('/generate-label-carton', methods=['POST'])
 def generate_label():
     data = request.json
     gtin = data.get("gtin", "")

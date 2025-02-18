@@ -16,7 +16,7 @@ import { saveAs } from 'file-saver';
 })
 export class CreerDataCartonPage {
 
-  produit = { 
+  carton = { 
     gtin: '', 
     content_gtin: '', 
     batch: '', 
@@ -29,12 +29,12 @@ export class CreerDataCartonPage {
   constructor(private http: HttpClient) {}
 
   generateLabel(): void {
-    if (!this.produit.gtin || !this.produit.content_gtin || !this.produit.batch || !this.produit.expiry_date) {
+    if (!this.carton.gtin || !this.carton.content_gtin || !this.carton.batch || !this.carton.expiry_date) {
       alert("Veuillez remplir tous les champs !");
       return;
     }
 
-    this.http.post('http://127.0.0.1:5000/generate-label', this.produit, { responseType: 'blob' })
+    this.http.post('http://127.0.0.1:5000/generate-label-carton', this.carton, { responseType: 'blob' })
       .subscribe(blob => {
         this.labelUrl = URL.createObjectURL(blob);
       }, error => {
