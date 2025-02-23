@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { FormsModule } from '@angular/forms';
 import jspdf from 'jspdf';
+
 import { IonContent, IonHeader, IonTitle, IonToolbar, IonItem, IonLabel, IonButton, IonInput } from '@ionic/angular/standalone';
 import { HttpClientModule, HttpClient } from '@angular/common/http';
 import { saveAs } from 'file-saver';
@@ -30,11 +31,13 @@ export class CreerDataCartonPage {
 
   generateLabel(): void {
     if (!this.carton.gtin || !this.carton.content_gtin || !this.carton.batch || !this.carton.expiry_date) {
+
       alert("Veuillez remplir tous les champs !");
       return;
     }
 
     this.http.post('http://127.0.0.1:5000/generate-label-carton', this.carton, { responseType: 'blob' })
+
       .subscribe(blob => {
         this.labelUrl = URL.createObjectURL(blob);
       }, error => {
@@ -74,6 +77,10 @@ export class CreerDataCartonPage {
     console.error('Erreur lors du chargement de l\'image pour le PDF ', error);
     
   }
+
+    if (this.labelUrl) {
+      saveAs(this.labelUrl, "etiquette.pdf");
+    }
   }
 
 }

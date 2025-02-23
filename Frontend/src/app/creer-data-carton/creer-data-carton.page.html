@@ -9,26 +9,33 @@
     <ion-item>
       <ion-label position="floating">GTIN</ion-label>
       <ion-input [(ngModel)]="carton.gtin" name="gtin" required></ion-input>
+
     </ion-item>
 
     <ion-item>
       <ion-label position="floating">Content GTIN</ion-label>
       <ion-input [(ngModel)]="carton.content_gtin" name="content_gtin" required></ion-input>
+
     </ion-item>
 
     <ion-item>
       <ion-label position="floating">Batch</ion-label>
+
       <ion-input [(ngModel)]="carton.batch" name="batch" required></ion-input>
+
     </ion-item>
 
     <ion-item>
       <ion-label position="floating">Expiry Date (JJ/MM/AA)</ion-label>
+
       <ion-input [(ngModel)]="carton.expiry_date" name="expiry_date" required></ion-input>
+
     </ion-item>
 
     <ion-item>
       <ion-label position="floating">Quantity</ion-label>
       <ion-input type="number" [(ngModel)]="carton.quantity" name="quantity" required></ion-input>
+
     </ion-item>
 
     <ion-button expand="full" type="submit">Générer l'étiquette</ion-button>
