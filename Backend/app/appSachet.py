@@ -1,13 +1,12 @@
-from flask import Flask, request, send_file
+from flask import Flask, Blueprint, request, send_file
 from pylibdmtx.pylibdmtx import encode
 from PIL import Image
 from flask_cors import CORS
 import io
 
-app = Flask(__name__)
-CORS(app)
+datamatrix_bp = Blueprint('datamatrix', __name__)
 
-@app.route('/generate-datamatrix-sachet', methods=['POST'])
+@datamatrix_bp.route('/generate-datamatrix-sachet', methods=['POST'])
 def generate_datamatrix():
     data = request.json
     gtin = data.get("gtin", "")
@@ -33,5 +32,3 @@ def generate_datamatrix():
 
     return send_file(img_io, mimetype='image/png')
 
-if __name__ == '__main__':
-    app.run(debug=True, host='0.0.0.0', port=5000)

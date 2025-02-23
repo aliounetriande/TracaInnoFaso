@@ -1,16 +1,16 @@
-from flask import Flask, request, send_file
+from flask import Flask, Blueprint, request, send_file
 from pylibdmtx.pylibdmtx import encode
 from PIL import Image, ImageDraw, ImageFont
 from flask_cors import CORS
 import io
 
-app = Flask(__name__)
-CORS(app)
 
 LABEL_WIDTH = int(74 * 11.81)  # 74 mm en pixels
 LABEL_HEIGHT = int(105 * 11.81)  # 105 mm en pixels
 
-@app.route('/generate-label-carton', methods=['POST'])
+carton_bp = Blueprint('carton', __name__)
+
+@carton_bp.route('/generate-label-carton', methods=['POST'])
 def generate_label():
     data = request.json
     gtin = data.get("gtin", "")
@@ -68,5 +68,3 @@ def generate_label():
 
     return send_file(img_io, mimetype='image/png')
 
-if __name__ == '__main__':
-    app.run(debug=True, host='0.0.0.0', port=5000)

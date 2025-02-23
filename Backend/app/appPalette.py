@@ -1,16 +1,17 @@
-from flask import Flask, request, send_file
+from flask import Flask, Blueprint, request, send_file
 from pylibdmtx.pylibdmtx import encode
 from PIL import Image, ImageDraw, ImageFont
 from flask_cors import CORS
 import io
 
-app = Flask(__name__)
-CORS(app)
+
 
 LABEL_WIDTH = int(148 * 11.81)  # 148 mm en pixels
 LABEL_HEIGHT = int(105 * 11.81)  # 105 mm en pixels
 
-@app.route('/generate-label', methods=['POST'])
+palette_bp = Blueprint('palette', __name__)
+
+@palette_bp.route('/generate-label', methods=['POST'])
 def generate_label():
     data = request.json
     sscc = data.get("sscc", " ")
@@ -79,5 +80,3 @@ def generate_label():
 
     return send_file(img_io, mimetype='application/png', as_attachment=True, download_name="Etiquette-palette.png")
 
-if __name__ == '__main__':
-    app.run(debug=True, host='127.0.0.1', port=5000)
