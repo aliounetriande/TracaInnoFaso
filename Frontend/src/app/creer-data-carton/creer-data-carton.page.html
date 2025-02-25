@@ -1,8 +1,16 @@
-<ion-header>
-  <ion-toolbar>
-    <ion-title>Générer une étiquette carton</ion-title>
-  </ion-toolbar>
-</ion-header>
+<ion-header [translucent]="true">
+      <ion-toolbar>
+        <div class="header-content">
+          <img src="assets/images/logo.jpg" alt="Logo" class="logo" [routerLink]="['/home']">
+          <div class="floating-menu">
+            <ion-button fill="clear" [routerLink]="['/creer-data-sachet']">Produit</ion-button>
+            <ion-button fill="clear" [routerLink]="['/creer-data-carton']">Carton</ion-button>
+            <ion-button fill="clear" [routerLink]="['/creer-data-palette']">Palette</ion-button>
+          </div>
+        </div>
+        <ion-title>Générer une étiquette carton</ion-title>
+      </ion-toolbar>
+    </ion-header>
 
 <ion-content class="ion-padding">
   <form (submit)="generateLabel()">

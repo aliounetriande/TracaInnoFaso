@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
 import { saveAs } from 'file-saver';
 import jspdf from 'jspdf';
+import { RouterLink } from '@angular/router';
 import { IonHeader, IonLabel } from "@ionic/angular/standalone";
 import { IonContent, IonTitle, IonToolbar, IonItem, IonButton, IonInput } from '@ionic/angular/standalone';
 import { CommonModule } from '@angular/common';
@@ -16,7 +17,7 @@ import { ReactiveFormsModule } from '@angular/forms';
   styleUrls: ['./creer-data-palette.page.scss'],
   standalone: true,
 
-  imports: [IonLabel, IonHeader, IonContent, IonHeader, IonTitle, IonToolbar, CommonModule, FormsModule, IonItem, IonButton, IonInput, ReactiveFormsModule]
+  imports: [IonLabel, IonHeader, IonContent, IonHeader, IonTitle, IonToolbar, CommonModule, FormsModule, IonItem, IonButton, IonInput, ReactiveFormsModule, RouterLink]
 
 })
 export class CreerDataPalettePage {

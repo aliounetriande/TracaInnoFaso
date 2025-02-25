@@ -1,6 +1,14 @@
 <ion-header [translucent]="true">
   <ion-toolbar>
-    <ion-title>Créer DataMatrix Sachet</ion-title>
+    <div class="header-content">
+      <img src="assets/images/logo.jpg" alt="Logo" class="logo" [routerLink]="['/home']">
+      <div class="floating-menu">
+        <ion-button fill="clear" [routerLink]="['/creer-data-sachet']">Produit</ion-button>
+        <ion-button fill="clear" [routerLink]="['/creer-data-carton']">Carton</ion-button>
+        <ion-button fill="clear" [routerLink]="['/creer-data-palette']">Palette</ion-button>
+      </div>
+    </div>
+    <ion-title>Générer datamatrix sachet</ion-title>
   </ion-toolbar>
 </ion-header>
 
@@ -18,7 +26,7 @@
 
     <ion-item>
       <ion-label position="floating">Expiry Date (JJ/MM/AA)</ion-label>
-      <ion-input [(ngModel)]="sachet.expiry_date" name="expiry_date" required [ngModelOptions]="{standalone: true}"></ion-input>
+      <ion-input [(ngModel)]="sachet.expiry_date" name="expiry_date" required [ngModelOptions]="{standalone: true}" type="date"></ion-input>
     </ion-item>
 
     <ion-button expand="full" type="submit">Générer la DataMatrix</ion-button>

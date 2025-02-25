@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { FormsModule } from '@angular/forms';
 import jspdf from 'jspdf';
-
+import { RouterLink } from '@angular/router';
 import { IonContent, IonHeader, IonTitle, IonToolbar, IonItem, IonLabel, IonButton, IonInput } from '@ionic/angular/standalone';
 import { HttpClientModule, HttpClient } from '@angular/common/http';
 import { saveAs } from 'file-saver';
@@ -13,7 +13,7 @@ import { saveAs } from 'file-saver';
   templateUrl: './creer-data-carton.page.html',
   styleUrls: ['./creer-data-carton.page.scss'],
   standalone: true,
-  imports: [IonButton, IonLabel, IonItem, IonContent, IonHeader, IonTitle, IonToolbar, CommonModule, FormsModule, HttpClientModule, IonInput]
+  imports: [IonButton, IonLabel, IonItem, IonContent, IonHeader, IonTitle, IonToolbar, CommonModule, FormsModule, HttpClientModule, IonInput, RouterLink]
 })
 export class CreerDataCartonPage {
 

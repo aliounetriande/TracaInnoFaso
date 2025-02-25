@@ -3,10 +3,11 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { HttpClientModule, HttpClient } from '@angular/common/http';
 import jspdf from 'jspdf';
+import { RouterLink } from '@angular/router';
 import { saveAs } from 'file-saver';
 import { 
   IonContent, IonHeader, IonTitle, IonToolbar, 
-  IonItem, IonButton, IonInput, IonLabel 
+  IonItem, IonButton, IonInput, IonLabel,
 } from '@ionic/angular/standalone';
 
 
@@ -18,7 +19,7 @@ import {
   imports: [
     IonLabel, IonItem, IonButton, IonContent, 
     IonHeader, IonTitle, IonToolbar, CommonModule, 
-    FormsModule, IonInput, HttpClientModule
+    FormsModule, IonInput, HttpClientModule, RouterLink
   ]
 })
 export class CreerDataSachetPage {

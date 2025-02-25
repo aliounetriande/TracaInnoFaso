@@ -1,20 +1,50 @@
 <ion-header [translucent]="true">
   <ion-toolbar>
-    <ion-title>
-      Blank
-    </ion-title>
+    <div class="header-content">
+      <img src="assets/images/logo.jpg" alt="Logo" class="logo" [routerLink]="['/home']" >
+      <div class="floating-menu">
+        <ion-button fill="clear" [routerLink]="['/creer-data-sachet']">Produit</ion-button>
+        <ion-button fill="clear" [routerLink]="['/creer-data-carton']">Carton</ion-button>
+        <ion-button fill="clear" [routerLink]="['/creer-data-palette']">Palette</ion-button>
+      </div>
+    </div>
   </ion-toolbar>
 </ion-header>
 
 <ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">Blank</ion-title>
-    </ion-toolbar>
-  </ion-header>
+  <div class="content-container">
+    <swiper-container>
+      <swiper-slide>
+        <div class="slide-content">
+          <img src="https://th.bing.com/th?id=OLC.mpoR+FQNXugkOQ480x360&rs=1&pid=ImgDetMain" alt="Image 2">
+        </div>
+      </swiper-slide>
+      <swiper-slide>
+        <div class="slide-content">
+          <img src="https://th.bing.com/th?id=OLC.qKKZ1RdX/YhgdA480x360&rs=1&pid=ImgDetMain" alt="Image 2">
+        </div>
+      </swiper-slide>
+      <swiper-slide>
+        <div class="slide-content">
+          <img src="https://th.bing.com/th?id=OLC.ZHHyGLSc+YhGdw480x360&rs=1&pid=ImgDetMain" alt="Image 1">
+        </div>
+      </swiper-slide>
+      <swiper-slide>
+        <div class="slide-content">
+          <img src="https://th.bing.com/th/id/OLC.qPZigQ4n10xaDQ480x360?&rs=1&pid=ImgDetMain" alt="Image 1">
+        </div>
+      </swiper-slide>
 
-  <div id="container">
-    <strong>Ready to create an app?</strong>
-    <p>Start with Ionic <a target="_blank" rel="noopener noreferrer" href="https://ionicframework.com/docs/components">UI Components</a></p>
+      <swiper-slide>
+        <div class="slide-content">
+          <img src="https://th.bing.com/th/id/OLC.o45AxSCQGWMSKw480x360?&rs=1&pid=ImgDetMain" alt="Image 3">
+        </div>
+      </swiper-slide>
+      <swiper-slide>
+        <div class="slide-content">
+          <img src="https://th.bing.com/th/id/OLC.fxPgwGRjjkvjsQ480x360?&rs=1&pid=ImgDetMain" alt="Image 3">
+        </div>
+      </swiper-slide>
+    </swiper-container>
   </div>
 </ion-content>
