@@ -13,40 +13,50 @@
     </ion-header>
 
 <ion-content class="ion-padding">
-  <form (submit)="generateLabel()">
+
+  <form [formGroup]="cartonForm" (ngSubmit)="generateLabel()">
     <ion-item>
-      <ion-label position="floating">GTIN</ion-label>
-      <ion-input [(ngModel)]="carton.gtin" name="gtin" required></ion-input>
+      <ion-label position="floating">GTIN carton</ion-label>
+      <!-- <ion-input [(ngModel)]="carton.gtin" name="gtin" required></ion-input> -->
+      <ion-select formControlName="gtin" interface="popover" aria-placeholder="Selectionner un GTIN" >
+        <ion-select-option *ngFor="let gtin of gtinOptions" [value]="gtin.value">
+          {{ gtin.label }} {{ gtin.value}}
+        </ion-select-option>
+      </ion-select> 
 
     </ion-item>
 
     <ion-item>
       <ion-label position="floating">Content GTIN</ion-label>
-      <ion-input [(ngModel)]="carton.content_gtin" name="content_gtin" required></ion-input>
-
+      <!-- <ion-input [(ngModel)]="carton.content_gtin" name="content_gtin" required></ion-input> -->
+      <ion-select formControlName="content_gtin" interface="popover" aria-placeholder="Selectionner un GTIN" >
+        <ion-select-option *ngFor="let gtin of gtinOptions" [value]="gtin.value">
+          {{ gtin.label }} {{ gtin.value}}
+        </ion-select-option>
+      </ion-select>
     </ion-item>
 
     <ion-item>
       <ion-label position="floating">Batch</ion-label>
 
-      <ion-input [(ngModel)]="carton.batch" name="batch" required></ion-input>
+      <ion-input formControlName="batch" required readonly></ion-input>
 
     </ion-item>
 
     <ion-item>
       <ion-label position="floating">Expiry Date (JJ/MM/AA)</ion-label>
 
-      <ion-input [(ngModel)]="carton.expiry_date" name="expiry_date" type="date" required></ion-input>
+      <ion-input formControlName="expiry_date" required readonly></ion-input>
 
     </ion-item>
 
     <ion-item>
       <ion-label position="floating">Quantity</ion-label>
-      <ion-input type="number" [(ngModel)]="carton.quantity" name="quantity" required></ion-input>
+      <ion-input type="number" formControlName="quantity" required readonly></ion-input>
 
     </ion-item>
 
-    <ion-button expand="full" type="submit">Générer l'étiquette</ion-button>
+    <ion-button expand="full" type="submit" [disabled]="cartonForm.invalid">Générer l'étiquette</ion-button>
   </form>
 
   <div *ngIf="labelUrl">

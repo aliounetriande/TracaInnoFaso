@@ -1,14 +1,19 @@
-import { Component } from '@angular/core';
+import { Component, forwardRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule, FormBuilder, FormGroup,Validators } from '@angular/forms';
 import { HttpClientModule, HttpClient } from '@angular/common/http';
 import jspdf from 'jspdf';
 import { RouterLink } from '@angular/router';
 import { saveAs } from 'file-saver';
 import { 
   IonContent, IonHeader, IonTitle, IonToolbar, 
-  IonItem, IonButton, IonInput, IonLabel,
+  IonItem, IonButton, IonInput, IonLabel, IonSelect, IonSelectOption
 } from '@ionic/angular/standalone';
+
+interface GtinOption {
+  label: string;
+  value: string;
+}
 
 
 @Component({
@@ -18,28 +23,42 @@ import {
   standalone: true,
   imports: [
     IonLabel, IonItem, IonButton, IonContent, 
-    IonHeader, IonTitle, IonToolbar, CommonModule, 
-    FormsModule, IonInput, HttpClientModule, RouterLink
-  ]
+    IonHeader, IonTitle, IonToolbar, CommonModule, IonInput,
+    FormsModule, ReactiveFormsModule, HttpClientModule, RouterLink, IonSelect, IonSelectOption, 
+  ],
+  
 })
 export class CreerDataSachetPage {
-  sachet = { 
-    gtin: '', 
-    batch: '', 
-    expiry_date: ''
-  };
 
+  sachetForm: FormGroup;
   imageUrl: string | null = null;
 
-  constructor(private http: HttpClient) {}
+
+  gtinOptions: GtinOption[] = [
+    { label: 'GTIN Sachet plumpy nut', value: '6188000059007' },
+    { label: 'GTIN Carton plumpy nut', value: '6188000059008' }
+  ];
+
+  
+
+  constructor(private http: HttpClient, private fb: FormBuilder) {
+
+    this.sachetForm = this.fb.group({
+      gtin: ['', Validators.required]
+      
+    }); 
+  
+  }
 
   generateDataMatrix(): void {
-    if (!this.sachet.gtin || !this.sachet.batch || !this.sachet.expiry_date) {
+    console.log("Génération de la datamatrix pour le sachet", this.sachetForm.value);
+    
+    if (!this.sachetForm.valid) {
       alert("Veuillez remplir tous les champs !");
       return;
     }
 
-    this.http.post('http://127.0.0.1:5000/generate-datamatrix-sachet', this.sachet, { responseType: 'blob' })
+    this.http.post('http://127.0.0.1:5000/generate-datamatrix-sachet', this.sachetForm.value, { responseType: 'blob' })
       .subscribe(blob => {
         this.imageUrl = URL.createObjectURL(blob);
       }, error => {
@@ -71,4 +90,10 @@ export class CreerDataSachetPage {
       console.error("Erreur lors du chargement de l'image pour le PDF", error);
     };
   }
+
+  onSelectChange(event: any) {
+    console.log("GTIN sélectionné :", event.detail.value);
+  }
+  
+
 }

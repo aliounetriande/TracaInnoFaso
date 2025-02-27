@@ -1,42 +1,103 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit} from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormBuilder, FormGroup } from '@angular/forms';
-import { FormsModule } from '@angular/forms';
+import { FormBuilder, FormGroup,Validators  } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import jspdf from 'jspdf';
 import { RouterLink } from '@angular/router';
-import { IonContent, IonHeader, IonTitle, IonToolbar, IonItem, IonLabel, IonButton, IonInput } from '@ionic/angular/standalone';
+import { IonContent, IonHeader, IonTitle, IonToolbar, IonItem, IonLabel, IonButton, IonSelect, IonSelectOption, IonInput } from '@ionic/angular/standalone';
 import { HttpClientModule, HttpClient } from '@angular/common/http';
 import { saveAs } from 'file-saver';
+
+interface GtinOption {
+  label: string;
+  value: string;
+}
 
 @Component({
   selector: 'app-creer-data-carton',
   templateUrl: './creer-data-carton.page.html',
   styleUrls: ['./creer-data-carton.page.scss'],
   standalone: true,
-  imports: [IonButton, IonLabel, IonItem, IonContent, IonHeader, IonTitle, IonToolbar, CommonModule, FormsModule, HttpClientModule, IonInput, RouterLink]
+  imports: [IonButton, IonLabel, IonItem, IonContent, IonHeader, IonTitle, IonToolbar, CommonModule, FormsModule, HttpClientModule, RouterLink, IonSelect, IonSelectOption, ReactiveFormsModule, IonInput]
 })
+
 export class CreerDataCartonPage {
 
-  carton = { 
-    gtin: '', 
-    content_gtin: '', 
-    batch: '', 
-    expiry_date: '', 
-    quantity: 150 
-  };
+  cartonForm: FormGroup;
+  labelUrl: string | null = null;
 
-   labelUrl: string | null = null;
+  gtinOptions: GtinOption[] = [
+    { label: 'GTIN Sachet plumpy nut', value: '6188000059007' },
+    { label: 'GTIN Carton plumpy nut', value: '6188000059008' }
+  ];
 
-  constructor(private http: HttpClient) {}
 
+
+  // carton = { 
+  //   gtin: '', 
+  //   content_gtin: '', 
+  //   batch: '', 
+  //   expiry_date: '', 
+  //   quantity: 150 
+  // };
+
+
+  constructor(private http: HttpClient, private fb: FormBuilder) {
+    this.cartonForm = this.fb.group({
+          gtin: ['', Validators.required],
+          content_gtin: ['', Validators.required],
+          batch: [this.generateBatch(), [Validators.required, Validators.pattern(/^\d{6}$/)]], 
+          expiry_date: [this.generateExpiryDate(), [Validators.required, Validators.pattern(/^\d{2}\/\d{2}$/)]],
+          quantity: ['150', Validators.required],
+          
+        }); 
+  }
+
+  ngOnInit() {
+    this.cartonForm.patchValue({ 
+      batch: this.generateBatch(),
+      expiry_date: this.generateExpiryDate()
+    });
+  }
+  
+
+  private generateBatch(): string {
+    const now = new Date();
+    const year = now.getFullYear() % 100; // Obtenir les deux derniers chiffres de l'année (ex: 25 pour 2025)
+    const month = (now.getMonth() + 1).toString().padStart(2, '0'); // Mois avec zéro initial si < 10
+    const week = this.getWeekNumber(now).toString().padStart(2, '0'); // Numéro de la semaine avec zéro initial
+  
+    return `${week}${month}${year}`;
+  }
+  
+  // Fonction pour obtenir le numéro de la semaine de l'année
+  private getWeekNumber(date: Date): number {
+    const oneJan = new Date(date.getFullYear(), 0, 1);
+    const millisBetween = date.getTime() - oneJan.getTime();
+    const daysBetween = millisBetween / (1000 * 60 * 60 * 24);
+    
+    return Math.ceil((daysBetween + oneJan.getDay() + 1) / 7);
+  }
+
+
+  private generateExpiryDate(): string {
+    const now = new Date();
+    const expiryYear = (now.getFullYear() + 2) % 100; // Année +2 (ex: 2027 -> 27)
+    const expiryMonth = (now.getMonth() + 1).toString().padStart(2, '0'); // Mois avec zéro initial
+  
+    return `${expiryMonth}/${expiryYear}`;
+  }
+  
+  
+  
   generateLabel(): void {
-    if (!this.carton.gtin || !this.carton.content_gtin || !this.carton.batch || !this.carton.expiry_date) {
+    if (!this.cartonForm.valid) {
 
       alert("Veuillez remplir tous les champs !");
       return;
     }
 
-    this.http.post('http://127.0.0.1:5000/generate-label-carton', this.carton, { responseType: 'blob' })
+    this.http.post('http://127.0.0.1:5000/generate-label-carton', this.cartonForm.value, { responseType: 'blob' })
 
       .subscribe(blob => {
         this.labelUrl = URL.createObjectURL(blob);
@@ -78,9 +139,6 @@ export class CreerDataCartonPage {
     
   }
 
-    if (this.labelUrl) {
-      saveAs(this.labelUrl, "etiquette.pdf");
-    }
   }
 
 }

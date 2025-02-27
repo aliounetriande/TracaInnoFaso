@@ -13,24 +13,21 @@
 </ion-header>
 
 <ion-content class="ion-padding">
-  <form (submit)="generateDataMatrix()">
+  <form [formGroup]="sachetForm" (ngSubmit)="generateDataMatrix()">
     <ion-item>
-      <ion-label position="floating">GTIN</ion-label>
-      <ion-input [(ngModel)]="sachet.gtin" name="gtin" required [ngModelOptions]="{standalone: true}"></ion-input>
-    </ion-item>
+      <ion-label position="floating">Sélectionnez le GTIN</ion-label>
+        <ion-select formControlName="gtin" interface="popover" aria-placeholder="Selectionner un GTIN" >
+        <ion-select-option *ngFor="let gtin of gtinOptions" [value]="gtin">
+          {{ gtin.label }} {{ gtin.value}}
+        </ion-select-option>
+      </ion-select> 
 
-    <ion-item>
-      <ion-label position="floating">Batch</ion-label>
-      <ion-input [(ngModel)]="sachet.batch" name="batch" required [ngModelOptions]="{standalone: true}"></ion-input>
+      <!-- <ion-input formControlName="gtin" type="text" placeholder="GTIN"></ion-input> -->
     </ion-item>
+  
+    <ion-button expand="full" type="submit" [disabled]="sachetForm.invalid">Générer la DataMatrix</ion-button>
+  </form> 
 
-    <ion-item>
-      <ion-label position="floating">Expiry Date (JJ/MM/AA)</ion-label>
-      <ion-input [(ngModel)]="sachet.expiry_date" name="expiry_date" required [ngModelOptions]="{standalone: true}" type="date"></ion-input>
-    </ion-item>
-
-    <ion-button expand="full" type="submit">Générer la DataMatrix</ion-button>
-  </form>
 
   <div *ngIf="imageUrl">
     <h3>Aperçu de la DataMatrix</h3>

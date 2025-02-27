@@ -10,14 +10,12 @@ datamatrix_bp = Blueprint('datamatrix', __name__)
 def generate_datamatrix():
     data = request.json
     gtin = data.get("gtin", "")
-    batch = data.get("batch", "")
-    expiry_date = data.get("expiry_date", "")
 
-    if not gtin or not batch or not expiry_date:
+    if not gtin:
         return {"error": "Champs manquants"}, 400
 
     # Générer la Data Matrix avec les informations
-    dm_data = f"GTIN:{gtin};BATCH:{batch};EXP:{expiry_date};;"
+    dm_data = f"GTIN:{gtin};;"
     encoded = encode(dm_data.encode('utf-8'))
     dm_image = Image.frombytes('RGB', (encoded.width, encoded.height), encoded.pixels)
 
