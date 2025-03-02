@@ -23,6 +23,7 @@ def generate_label():
     order_number = data.get("order_number", " ")
     number_part_cust = data.get("number_part_cust", " ")
     description = data.get("description", " ")
+    totalPalettes = data.get("totalPalettes", " ")
 
     label = Image.new("RGB", (LABEL_WIDTH, LABEL_HEIGHT), "white")
     draw = ImageDraw.Draw(label)
@@ -65,8 +66,9 @@ def generate_label():
     draw.text((900, 1050), f"(37) {quantity}", font=font, fill="black")
     draw.text((900, 1100), f"(241) {number_part_cust}", font=font, fill="black")
     draw.text((900, 1150), f"(400)) {order_number}", font=font, fill="black")
+    draw.text((1473, 1175), f"{totalPalettes}", font=font, fill="black")
 
-    dm_data = f"SSCC:{sscc};CONTENT GTIN:{content_gtin};BATCH:{batch};EXP:{expiry_date};PROD DATE:{prod_date};QTY:{quantity};ORDER:{order_number};CUST PART NUMBER:{number_part_cust};;"
+    dm_data = f"SSCC:{sscc};CONTENT GTIN:{content_gtin};BATCH:{batch};EXP:{expiry_date};PROD DATE:{prod_date};QTY:{quantity};ORDER:{order_number};CUST PART NUMBER:{number_part_cust}; INDEX:{totalPalettes};"
     encoded = encode(dm_data.encode('utf-8'))
     dm_image = Image.frombytes('RGB', (encoded.width, encoded.height), encoded.pixels)
 
