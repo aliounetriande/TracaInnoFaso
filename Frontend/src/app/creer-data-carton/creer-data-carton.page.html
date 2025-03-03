@@ -20,7 +20,7 @@
       <!-- <ion-input [(ngModel)]="carton.gtin" name="gtin" required></ion-input> -->
       <ion-select formControlName="gtin" interface="popover" aria-placeholder="Selectionner un GTIN" >
         <ion-select-option *ngFor="let gtin of gtinOptions" [value]="gtin.value">
-          {{ gtin.label }} {{ gtin.value}}
+          {{ gtin.label }}
         </ion-select-option>
       </ion-select> 
 
@@ -31,7 +31,7 @@
       <!-- <ion-input [(ngModel)]="carton.content_gtin" name="content_gtin" required></ion-input> -->
       <ion-select formControlName="content_gtin" interface="popover" aria-placeholder="Selectionner un GTIN" >
         <ion-select-option *ngFor="let gtin of gtinOptions" [value]="gtin.value">
-          {{ gtin.label }} {{ gtin.value}}
+          {{ gtin.label }}
         </ion-select-option>
       </ion-select>
     </ion-item>

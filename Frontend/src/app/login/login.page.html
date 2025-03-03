@@ -1,0 +1,40 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title>login</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <div class="login-container">
+    <div class="logo-container">
+      <!-- Logo InnoFaso -->
+      <img src="assets/images/logo.jpg" alt="InnoFaso Logo" class="logo">
+    </div>
+
+    <h1>Connexion</h1>
+
+    <form (ngSubmit)="onSubmit()">
+      <div class="input-group">
+        <ion-item>
+          <ion-label position="stacked">Identifiant</ion-label>
+          <ion-input type="text" [(ngModel)]="username" name="username"></ion-input>
+        </ion-item>
+        <p class="error-message" *ngIf="usernameError">Veuillez entrer un identifiant valide</p>
+      </div>
+
+      <div class="input-group">
+        <ion-item>
+          <ion-label position="stacked">Mot de passe</ion-label>
+          <ion-input type="password" [(ngModel)]="password" name="password"></ion-input>
+        </ion-item>
+        <p class="error-message" *ngIf="passwordError">Veuillez entrer votre mot de passe</p>
+      </div>
+
+      <ion-button type="submit" expand="block" class="login-btn">Se connecter</ion-button>
+    </form>
+
+    <div class="forgot-password">
+      <a href="#">Mot de passe oublié ?</a>
+    </div>
+  </div>
+</ion-content>

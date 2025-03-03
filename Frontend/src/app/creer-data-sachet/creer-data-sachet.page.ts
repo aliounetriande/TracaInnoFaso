@@ -7,7 +7,7 @@ import { RouterLink } from '@angular/router';
 import { saveAs } from 'file-saver';
 import { 
   IonContent, IonHeader, IonTitle, IonToolbar, 
-  IonItem, IonButton, IonInput, IonLabel, IonSelect, IonSelectOption
+  IonItem, IonButton, IonLabel, IonSelect, IonSelectOption
 } from '@ionic/angular/standalone';
 
 interface GtinOption {
@@ -23,7 +23,7 @@ interface GtinOption {
   standalone: true,
   imports: [
     IonLabel, IonItem, IonButton, IonContent, 
-    IonHeader, IonTitle, IonToolbar, CommonModule, IonInput,
+    IonHeader, IonTitle, IonToolbar, CommonModule,
     FormsModule, ReactiveFormsModule, HttpClientModule, RouterLink, IonSelect, IonSelectOption, 
   ],
   

@@ -2,13 +2,17 @@ import { Routes } from '@angular/router';
 
 export const routes: Routes = [
   {
-    path: 'home',
-    loadComponent: () => import('./home/home.page').then((m) => m.HomePage),
+    path: 'login',
+    loadComponent: () => import('./login/login.page').then( m => m.LoginPage)
   },
   {
     path: '',
-    redirectTo: 'home',
+    redirectTo: 'login',
     pathMatch: 'full',
+  },
+  {
+    path: 'home',
+    loadComponent: () => import('./home/home.page').then((m) => m.HomePage),
   },
   {
     path: 'creer-data-sachet',
@@ -22,4 +26,5 @@ export const routes: Routes = [
     path: 'creer-data-carton',
     loadComponent: () => import('./creer-data-carton/creer-data-carton.page').then( m => m.CreerDataCartonPage)
   },
+  
 ];

@@ -18,7 +18,7 @@
       <ion-label position="floating">Sélectionnez le GTIN</ion-label>
         <ion-select formControlName="gtin" interface="popover" aria-placeholder="Selectionner un GTIN" >
         <ion-select-option *ngFor="let gtin of gtinOptions" [value]="gtin">
-          {{ gtin.label }} {{ gtin.value}}
+          {{ gtin.label }}
         </ion-select-option>
       </ion-select> 
 
