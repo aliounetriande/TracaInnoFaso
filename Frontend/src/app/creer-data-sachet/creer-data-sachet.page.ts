@@ -36,7 +36,7 @@ export class CreerDataSachetPage {
 
   gtinOptions: GtinOption[] = [
     { label: 'GTIN Sachet plumpy nut', value: '6188000059007' },
-    { label: 'GTIN Carton plumpy nut', value: '6188000059008' }
+    { label: 'GTIN Sachet plumpy sup', value: '6188000059010' }
   ];
 
   
