@@ -2,6 +2,7 @@ from flask import Flask, Blueprint, request, send_file
 from pylibdmtx.pylibdmtx import encode
 from PIL import Image, ImageDraw, ImageFont
 from flask_cors import CORS
+from flask_jwt_extended import jwt_required
 import io
 
 
@@ -11,6 +12,7 @@ LABEL_HEIGHT = int(105 * 11.81)  # 105 mm en pixels
 carton_bp = Blueprint('carton', __name__)
 
 @carton_bp.route('/generate-label-carton', methods=['POST'])
+@jwt_required()
 def generate_label():
     data = request.json
     gtin = data.get("gtin", "")
@@ -18,8 +20,9 @@ def generate_label():
     batch = data.get("batch", "")
     expiry_date = data.get("expiry_date", "")
     quantity = data.get("quantity", "150")
+    serial_number = data.get("serial_number", "")
 
-    if not gtin or not content_gtin or not batch or not expiry_date:
+    if not gtin or not content_gtin or not batch or not expiry_date or not serial_number:
         return {"error": "Champs manquants"}, 400
 
     label = Image.new("RGB", (LABEL_WIDTH, LABEL_HEIGHT), "white")
@@ -40,9 +43,11 @@ def generate_label():
     draw.text((30, 450), f"{expiry_date}", font=font, fill="black", stroke_width=2, stroke_fill="black")
     draw.text((590, 220), f"QUANTITY", font=font, fill="black")
     draw.text((590, 290), f"{quantity}", font=font, fill="black", stroke_width=2, stroke_fill="black")
+    draw.text((30, 560), f"SERIAL NUMBER", font=font, fill="black")
+    draw.text((30, 630), f"{serial_number}", font=font, fill="black", stroke_width=2, stroke_fill="black")
     
     # Dessiner un trait horizontal au milieu de l'étiquette
-    draw.line([(10, 650), (860, 650)], fill="black", width=5)
+    draw.line([(10, 750), (860, 750)], fill="black", width=5)
 
     draw.text((550, 900), f"(01) {gtin}", font=font, fill="black")
     draw.text((550, 950), f"(10) {expiry_date}", font=font, fill="black")

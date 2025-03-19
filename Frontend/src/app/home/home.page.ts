@@ -3,6 +3,8 @@ import { IonHeader, IonToolbar, IonTitle, IonContent } from '@ionic/angular/stan
 import { IonicModule } from '@ionic/angular';
 import { RouterLink } from '@angular/router';
 import { register } from 'swiper/element/bundle';
+import { AuthService } from '../services/auth.service'; 
+import { Router } from '@angular/router';
 
 register();
 
@@ -16,6 +18,9 @@ register();
   encapsulation: ViewEncapsulation.None
 })
 export class HomePage implements AfterViewInit {
+
+  constructor(private authService: AuthService, private router: Router) {}
+
   swiperConfig = {
     slidesPerView: 1,
     spaceBetween: 0,
@@ -46,5 +51,10 @@ export class HomePage implements AfterViewInit {
         swiper.init();
       }
     }
+  }
+
+  logout() {
+    this.authService.logout(); // Appel de la méthode logout du service
+    this.router.navigate(['/login']); // Redirection vers la page de connexion
   }
 }

@@ -6,6 +6,8 @@ import jspdf from 'jspdf';
 import { RouterLink } from '@angular/router';
 import { IonContent, IonHeader, IonTitle, IonToolbar, IonItem, IonLabel, IonButton, IonSelect, IonSelectOption, IonInput } from '@ionic/angular/standalone';
 import { HttpClientModule, HttpClient } from '@angular/common/http';
+import { Router } from '@angular/router';
+import { AuthService } from '../services/auth.service';
 import { saveAs } from 'file-saver';
 
 interface GtinOption {
@@ -42,13 +44,15 @@ export class CreerDataCartonPage {
   // };
 
 
-  constructor(private http: HttpClient, private fb: FormBuilder) {
+  constructor(private http: HttpClient, private fb: FormBuilder, private authService: AuthService, private router: Router) {
+    const currentYear = new Date().getFullYear().toString().slice(-2); // Récupère "25" pour 2025
     this.cartonForm = this.fb.group({
           gtin: ['', Validators.required],
           content_gtin: ['', Validators.required],
           batch: [this.generateBatch(), [Validators.required, Validators.pattern(/^\d{6}$/)]], 
           expiry_date: [this.generateExpiryDate(), [Validators.required, Validators.pattern(/^\d{2}\/\d{2}$/)]],
           quantity: ['150', Validators.required],
+          serial_number: [`${currentYear}000003`, [Validators.required, Validators.pattern(/^\d{8}$/)]],
           
         }); 
   }
@@ -101,9 +105,19 @@ export class CreerDataCartonPage {
 
       .subscribe(blob => {
         this.labelUrl = URL.createObjectURL(blob);
+
+         // Incrémenter le numéro de carton
+      let currentCartonNumber = this.cartonForm.get('serial_number')?.value;
+      let num = parseInt(currentCartonNumber.slice(2), 10) + 1; // Récupère les 6 derniers chiffres et incrémente
+      let newCartonNumber = currentCartonNumber.slice(0, 2) + num.toString().padStart(6, '0'); // Reformate en 8 chiffres
+
+      this.cartonForm.patchValue({ serial_number: newCartonNumber });
+
       }, error => {
         console.error("Erreur de génération de l'étiquette", error);
       });
+
+
   }
 
   downloadLabel(): void {
@@ -139,6 +153,11 @@ export class CreerDataCartonPage {
     
   }
 
+  }
+
+  logout() {
+    this.authService.logout(); // Appel de la méthode logout du service
+    this.router.navigate(['/login']); // Redirection vers la page de connexion
   }
 
 }

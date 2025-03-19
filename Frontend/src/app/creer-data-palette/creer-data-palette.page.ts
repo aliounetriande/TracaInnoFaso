@@ -9,6 +9,8 @@ import { IonContent, IonTitle, IonToolbar, IonItem, IonButton, IonInput, IonSele
 import { CommonModule, NgForOf } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { ReactiveFormsModule } from '@angular/forms';
+import { Router } from '@angular/router';
+import { AuthService } from '../services/auth.service';
 
 interface SsccOption {
   codeSscc: string;
@@ -50,7 +52,7 @@ export class CreerDataPalettePage {
   ];
 
 
-  constructor(private fb: FormBuilder, private http: HttpClient) {
+  constructor(private fb: FormBuilder, private http: HttpClient, private authService: AuthService, private router: Router) {
     /* 
     Cette partie concerne la date d'expiration et de production
     */
@@ -183,6 +185,11 @@ export class CreerDataPalettePage {
     
   }
 
+}
+
+logout() {
+  this.authService.logout(); // Appel de la méthode logout du service
+  this.router.navigate(['/login']); // Redirection vers la page de connexion
 }
 }
 

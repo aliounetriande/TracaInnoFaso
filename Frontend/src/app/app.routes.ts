@@ -1,4 +1,5 @@
 import { Routes } from '@angular/router';
+import { AuthGuard } from './guards/auth.guard';  // Assure-toi d'importer le guard
 
 export const routes: Routes = [
   {
@@ -13,18 +14,22 @@ export const routes: Routes = [
   {
     path: 'home',
     loadComponent: () => import('./home/home.page').then((m) => m.HomePage),
+    canActivate: [AuthGuard],  // Protège cette route
   },
   {
     path: 'creer-data-sachet',
-    loadComponent: () => import('./creer-data-sachet/creer-data-sachet.page').then( m => m.CreerDataSachetPage)
+    loadComponent: () => import('./creer-data-sachet/creer-data-sachet.page').then( m => m.CreerDataSachetPage),
+    canActivate: [AuthGuard],  // Protège cette route
   },
   {
     path: 'creer-data-palette',
-    loadComponent: () => import('./creer-data-palette/creer-data-palette.page').then( m => m.CreerDataPalettePage)
+    loadComponent: () => import('./creer-data-palette/creer-data-palette.page').then( m => m.CreerDataPalettePage),
+    canActivate: [AuthGuard],  // Protège cette route
   },
   {
     path: 'creer-data-carton',
-    loadComponent: () => import('./creer-data-carton/creer-data-carton.page').then( m => m.CreerDataCartonPage)
+    loadComponent: () => import('./creer-data-carton/creer-data-carton.page').then( m => m.CreerDataCartonPage),
+    canActivate: [AuthGuard],  // Protège cette route
   },
   
 ];

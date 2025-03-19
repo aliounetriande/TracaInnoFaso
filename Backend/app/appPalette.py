@@ -2,6 +2,7 @@ from flask import Flask, Blueprint, request, send_file
 from pylibdmtx.pylibdmtx import encode
 from PIL import Image, ImageDraw, ImageFont
 from flask_cors import CORS
+from flask_jwt_extended import jwt_required
 import io
 
 
@@ -12,6 +13,7 @@ LABEL_HEIGHT = int(105 * 11.81)  # 105 mm en pixels
 palette_bp = Blueprint('palette', __name__)
 
 @palette_bp.route('/generate-label', methods=['POST'])
+@jwt_required()
 def generate_label():
     data = request.json
     sscc = data.get("sscc", " ")

@@ -13,28 +13,31 @@
 
     <h1>Connexion</h1>
 
-    <form (ngSubmit)="onSubmit()">
+    <!-- Formulaire réactif -->
+    <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
       <div class="input-group">
         <ion-item>
           <ion-label position="stacked">Identifiant</ion-label>
-          <ion-input type="text" [(ngModel)]="username" name="username"></ion-input>
+          <ion-input type="text" formControlName="username"></ion-input>
         </ion-item>
-        <p class="error-message" *ngIf="usernameError">Veuillez entrer un identifiant valide</p>
+        <p class="error-message" *ngIf="username?.invalid && username?.touched">
+          Veuillez entrer un identifiant valide
+        </p>
       </div>
 
       <div class="input-group">
         <ion-item>
           <ion-label position="stacked">Mot de passe</ion-label>
-          <ion-input type="password" [(ngModel)]="password" name="password"></ion-input>
+          <ion-input type="password" formControlName="password"></ion-input>
         </ion-item>
-        <p class="error-message" *ngIf="passwordError">Veuillez entrer votre mot de passe</p>
+        <p class="error-message" *ngIf="password?.invalid && password?.touched">
+          Veuillez entrer votre mot de passe
+        </p> 
       </div>
 
-      <ion-button type="submit" expand="block" class="login-btn">Se connecter</ion-button>
+      <ion-button type="submit" expand="block" [disabled]="loginForm.invalid" class="login-btn">
+        Se connecter
+      </ion-button>
     </form>
-
-    <div class="forgot-password">
-      <a href="#">Mot de passe oublié ?</a>
-    </div>
   </div>
 </ion-content>

@@ -2,11 +2,13 @@ from flask import Flask, Blueprint, request, send_file
 from pylibdmtx.pylibdmtx import encode
 from PIL import Image
 from flask_cors import CORS
+from flask_jwt_extended import jwt_required
 import io
 
 datamatrix_bp = Blueprint('datamatrix', __name__)
 
 @datamatrix_bp.route('/generate-datamatrix-sachet', methods=['POST'])
+@jwt_required()
 def generate_datamatrix():
     data = request.json
     gtin = data.get("gtin", "")

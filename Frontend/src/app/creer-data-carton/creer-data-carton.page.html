@@ -6,6 +6,7 @@
             <ion-button fill="clear" [routerLink]="['/creer-data-sachet']">Produit</ion-button>
             <ion-button fill="clear" [routerLink]="['/creer-data-carton']">Carton</ion-button>
             <ion-button fill="clear" [routerLink]="['/creer-data-palette']">Palette</ion-button>
+            <ion-button fill="clear" (click)="logout()">Déconnexion</ion-button> 
           </div>
         </div>
         <ion-title>Générer une étiquette carton</ion-title>
@@ -54,6 +55,11 @@
       <ion-label position="floating">Quantity</ion-label>
       <ion-input type="number" formControlName="quantity" required readonly></ion-input>
 
+    </ion-item>
+
+    <ion-item>
+      <ion-label position="floating">Serial Number</ion-label>
+      <ion-input formControlName="serial_number" required readonly></ion-input>
     </ion-item>
 
     <ion-button expand="full" type="submit" [disabled]="cartonForm.invalid">Générer l'étiquette</ion-button>

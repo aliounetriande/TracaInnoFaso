@@ -9,6 +9,9 @@ import {
   IonContent, IonHeader, IonTitle, IonToolbar, 
   IonItem, IonButton, IonLabel, IonSelect, IonSelectOption
 } from '@ionic/angular/standalone';
+import { Router } from '@angular/router';
+import { AuthService } from '../services/auth.service';
+
 
 interface GtinOption {
   label: string;
@@ -41,7 +44,7 @@ export class CreerDataSachetPage {
 
   
 
-  constructor(private http: HttpClient, private fb: FormBuilder) {
+  constructor(private http: HttpClient, private fb: FormBuilder, private authService: AuthService, private router: Router) {
 
     this.sachetForm = this.fb.group({
       gtin: ['', Validators.required]
@@ -95,5 +98,9 @@ export class CreerDataSachetPage {
     console.log("GTIN sélectionné :", event.detail.value);
   }
   
+  logout() {
+    this.authService.logout(); // Appel de la méthode logout du service
+    this.router.navigate(['/login']); // Redirection vers la page de connexion
+  }
 
 }
