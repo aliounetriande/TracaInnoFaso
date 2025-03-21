@@ -1,10 +1,10 @@
-from flask import Flask, Blueprint, request, send_file
+from flask import Flask, Blueprint, request, send_file, jsonify
 from pylibdmtx.pylibdmtx import encode
 from PIL import Image, ImageDraw, ImageFont
 from flask_cors import CORS
-from flask_jwt_extended import jwt_required
+from flask_jwt_extended import JWTManager, jwt_required
 import io
-
+import os
 
 LABEL_WIDTH = int(74 * 11.81)  # 74 mm en pixels
 LABEL_HEIGHT = int(105 * 11.81)  # 105 mm en pixels
@@ -15,6 +15,9 @@ carton_bp = Blueprint('carton', __name__)
 @jwt_required()
 def generate_label():
     data = request.json
+    print("Données reçues:", data)
+    
+
     gtin = data.get("gtin", "")
     content_gtin = data.get("content_gtin", "")
     batch = data.get("batch", "")

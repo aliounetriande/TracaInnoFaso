@@ -7,13 +7,14 @@ import { Router } from '@angular/router';
   providedIn: 'root',
 })
 export class AuthService {
-  private apiUrl = 'http://127.0.0.1:5000/auth'; // Remplace par ton URL backend
+  private apiUrl = 'http://127.0.0.1:5000/auth';
 
   constructor(private http: HttpClient, private router: Router) {}
 
-  login(credentials: { username: string; password: string }): Observable<any> {
-    return this.http.post(`${this.apiUrl}/login`, credentials);
+   login(credentials: { username: string; password: string }): Observable<any> {
+     return this.http.post(`${this.apiUrl}/login`, credentials);
   }
+
 
   saveToken(token: string): void {
     localStorage.setItem('token', token);

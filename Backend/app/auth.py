@@ -33,8 +33,8 @@ def add_user():
         return jsonify({"msg": "L'utilisateur existe déjà"}), 400
 
     # Créer un nouvel utilisateur
-    new_user = User(username=username)
-    new_user.set_password(password)
+    new_user = User(username=username, password=password)  # Passe bien le `password`
+
 
     db.session.add(new_user)
     db.session.commit()

@@ -25,12 +25,12 @@ def create_app():
     from app.appSachet import datamatrix_bp
     from app.appCarton import carton_bp
     from app.appPalette import palette_bp
-    from app.auth.routes import auth  # Import du blueprint d'authentification
+    from app.auth import auth_bp  # Import du Blueprint  # Import du blueprint d'authentification
    
     # Enregistrement des blueprints
     app.register_blueprint(datamatrix_bp)
     app.register_blueprint(carton_bp)
     app.register_blueprint(palette_bp)
-    app.register_blueprint(auth, url_prefix="/auth")  # Authentification
+    app.register_blueprint(auth_bp, url_prefix="/auth")  # Authentification
 
     return app

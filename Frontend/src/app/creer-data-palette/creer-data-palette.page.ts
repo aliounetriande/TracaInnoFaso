@@ -187,6 +187,13 @@ export class CreerDataPalettePage {
 
 }
 
+modifyLabel() {
+  // On efface l'image pour permettre la modification du formulaire
+  this.imageUrl = '';
+  this.currentPaletteNumber = this.currentPaletteNumber -1 ;
+ 
+}
+
 logout() {
   this.authService.logout(); // Appel de la méthode logout du service
   this.router.navigate(['/login']); // Redirection vers la page de connexion

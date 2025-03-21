@@ -96,29 +96,54 @@ export class CreerDataCartonPage {
   
   generateLabel(): void {
     if (!this.cartonForm.valid) {
-
       alert("Veuillez remplir tous les champs !");
       return;
     }
+  
+    const token = this.authService.getToken(); // Récupérer le token stocké
+    console.log("Token envoyé :", token);
+    if (!token) {
+      console.error("Aucun token trouvé, veuillez vous reconnecter.");
+      return;
+    }
+  
+    const headers = {
+      'Authorization': `Bearer ${token}`,
+      'Content-Type': 'application/json',
+    };
+  
+    console.log("Données envoyées : ", this.cartonForm.value);
 
-    this.http.post('http://127.0.0.1:5000/generate-label-carton', this.cartonForm.value, { responseType: 'blob' })
+this.http.post('http://127.0.0.1:5000/generate-label-carton', this.cartonForm.value, { headers: headers, responseType: 'blob' })
+  .subscribe({
+    next: (blob) => {
+      this.labelUrl = URL.createObjectURL(blob);
+      console.log("Étiquette générée avec succès !");
 
-      .subscribe(blob => {
-        this.labelUrl = URL.createObjectURL(blob);
-
-         // Incrémenter le numéro de carton
+      // Incrémenter le numéro de carton
       let currentCartonNumber = this.cartonForm.get('serial_number')?.value;
       let num = parseInt(currentCartonNumber.slice(2), 10) + 1; // Récupère les 6 derniers chiffres et incrémente
       let newCartonNumber = currentCartonNumber.slice(0, 2) + num.toString().padStart(6, '0'); // Reformate en 8 chiffres
 
       this.cartonForm.patchValue({ serial_number: newCartonNumber });
+    },
+    error: async (error) => {
+      console.error("Erreur de génération de l'étiquette", error);
 
-      }, error => {
-        console.error("Erreur de génération de l'étiquette", error);
-      });
-
-
+      // Si la réponse contient un Blob JSON (message d'erreur backend)
+      if (error.error instanceof Blob && error.error.type === "application/json") {
+        try {
+          const errorText = await error.error.text();
+          const errorJson = JSON.parse(errorText);
+          console.error("Détails de l'erreur JSON :", errorJson);
+        } catch (e) {
+          console.error("Impossible de lire la réponse d'erreur JSON :", e);
+        }
+      }
+    }
+  });
   }
+  
 
   downloadLabel(): void {
     // if (this.labelUrl) {

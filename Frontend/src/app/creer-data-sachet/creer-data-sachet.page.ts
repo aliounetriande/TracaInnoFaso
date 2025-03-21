@@ -61,7 +61,17 @@ export class CreerDataSachetPage {
       return;
     }
 
-    this.http.post('http://127.0.0.1:5000/generate-datamatrix-sachet', this.sachetForm.value, { responseType: 'blob' })
+    const token = this.authService.getToken(); // Récupérer le token stocké
+    if (!token) {
+      console.error("Aucun token trouvé, veuillez vous reconnecter.");
+      return;
+    }
+  
+    const headers = {
+      'Authorization': `Bearer ${token}`
+    };
+
+    this.http.post('http://127.0.0.1:5000/generate-datamatrix-sachet', this.sachetForm.value, {headers, responseType: 'blob' })
       .subscribe(blob => {
         this.imageUrl = URL.createObjectURL(blob);
       }, error => {

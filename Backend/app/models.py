@@ -19,7 +19,11 @@ class User(db.Model):
 
     def check_password(self, password):
         """Vérifie si le mot de passe correspond au hash enregistré"""
-        return check_password_hash(self.password_hash, password)
+        print("Mot de passe entré:", password)
+        print("Mot de passe haché enregistré:", self.password_hash)
+        result = check_password_hash(self.password_hash, password)
+        print("Résultat de la comparaison:", result)
+        return result
 
     def __repr__(self):
         return f"<User {self.username}>"
