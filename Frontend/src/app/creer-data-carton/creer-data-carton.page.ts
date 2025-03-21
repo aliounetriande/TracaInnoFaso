@@ -4,7 +4,7 @@ import { FormBuilder, FormGroup,Validators  } from '@angular/forms';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import jspdf from 'jspdf';
 import { RouterLink } from '@angular/router';
-import { IonContent, IonHeader, IonTitle, IonToolbar, IonItem, IonLabel, IonButton, IonSelect, IonSelectOption, IonInput } from '@ionic/angular/standalone';
+import { IonContent, IonHeader, IonTitle, IonToolbar, IonItem, IonLabel, IonButton, IonSelect, IonSelectOption, IonInput, IonFooter } from '@ionic/angular/standalone';
 import { HttpClientModule, HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { AuthService } from '../services/auth.service';
@@ -20,7 +20,7 @@ interface GtinOption {
   templateUrl: './creer-data-carton.page.html',
   styleUrls: ['./creer-data-carton.page.scss'],
   standalone: true,
-  imports: [IonButton, IonLabel, IonItem, IonContent, IonHeader, IonTitle, IonToolbar, CommonModule, FormsModule, HttpClientModule, RouterLink, IonSelect, IonSelectOption, ReactiveFormsModule, IonInput]
+  imports: [IonFooter, IonButton, IonLabel, IonItem, IonContent, IonHeader, IonToolbar, CommonModule, FormsModule, HttpClientModule, RouterLink, IonSelect, IonSelectOption, ReactiveFormsModule, IonInput]
 })
 
 export class CreerDataCartonPage {

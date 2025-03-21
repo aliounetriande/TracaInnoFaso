@@ -1,3 +1,62 @@
-#container button {
-    color: green;
+/* Style pour le header */
+.header-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+}
+
+/* Logo */
+.header-content .logo {
+  max-width: 150px; /* Ajuste la taille du logo si nécessaire */
+  height: auto;
+  padding-left: 10px;
+}
+
+/* Conteneur des boutons (Produit, Carton, Palette) */
+.menu-buttons {
+  display: flex;
+  gap: 10px; /* Espacement entre les boutons */
+  padding-left: 30px;
+}
+
+/* Bouton Déconnexion - Séparé des autres */
+.logout-button {
+  margin-left: auto; /* Permet de repousser le bouton à droite */
+  padding-right: 30px;
+}
+
+/* Style pour le footer */
+ion-footer {
+  width: 100%;
+  padding: 10px 0; /* Espacement vertical */
+  background: greenyellow;
+}
+
+ion-button{
+  --background: greenyellow;
+  --color: white;
+  font-size: small;
+}
+
+/* Contenu du footer */
+.footer-content {
+  width: 100%; /* Limite la largeur du footer */
+  margin: 0 auto; /* Centre le footer */
+  text-align: center; /* Centrer le texte à l'intérieur du footer */
+}
+
+/* Optionnel : style du texte */
+.footer-content p {
+  font-size: 14px;
+  color: #888; /* Couleur du texte, tu peux ajuster cette couleur */
+}
+
+/* Pour le mode responsive */
+@media (max-width: 480px) {
+  .login-container {
+    margin: 1rem;
+    padding: 1.5rem;
+    width: calc(100% - 2rem);
   }
+}

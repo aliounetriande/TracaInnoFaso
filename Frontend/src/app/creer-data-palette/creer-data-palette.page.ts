@@ -4,7 +4,7 @@ import { HttpClient } from '@angular/common/http';
 import { saveAs } from 'file-saver';
 import jspdf from 'jspdf';
 import { RouterLink } from '@angular/router';
-import { IonHeader, IonLabel } from "@ionic/angular/standalone";
+import { IonHeader, IonLabel, IonFooter } from "@ionic/angular/standalone";
 import { IonContent, IonTitle, IonToolbar, IonItem, IonButton, IonInput, IonSelect, IonSelectOption } from '@ionic/angular/standalone';
 import { CommonModule, NgForOf } from '@angular/common';
 import { FormsModule } from '@angular/forms';
@@ -28,7 +28,7 @@ interface gtinContent {
   styleUrls: ['./creer-data-palette.page.scss'],
   standalone: true,
 
-  imports: [IonLabel, IonHeader, IonContent, IonHeader, IonTitle, IonToolbar, CommonModule, FormsModule, IonItem, IonButton, IonInput, ReactiveFormsModule, RouterLink, IonSelectOption, NgForOf,IonSelect]
+  imports: [IonFooter, IonLabel, IonHeader, IonContent, IonHeader, IonToolbar, CommonModule, FormsModule, IonItem, IonButton, IonInput, ReactiveFormsModule, RouterLink, IonSelectOption, NgForOf,IonSelect]
 
 })
 export class CreerDataPalettePage {
@@ -134,8 +134,20 @@ export class CreerDataPalettePage {
         content_gtin: this.labelForm.value.content_gtin.gtinCode ,// Extraire uniquement le code GTIN
         totalPalettes: `${this.currentPaletteNumber}/${this.labelForm.value.totalPalettes}` // Ajouter le compteur
       };
+
+      const token = this.authService.getToken(); // Récupérer le token stocké
+      console.log("Token envoyé :", token);
+      if (!token) {
+        console.error("Aucun token trouvé, veuillez vous reconnecter.");
+        return;
+      }
+    
+      const headers = {
+        'Authorization': `Bearer ${token}`,
+        'Content-Type': 'application/json',
+      };
       
-      this.http.post('http://127.0.0.1:5000/generate-label', formData, { responseType: 'blob' })
+      this.http.post('http://127.0.0.1:5000/generate-label', formData, { headers: headers, responseType: 'blob' })
         .subscribe(blob => {
           // saveAs(blob, 'Etiquette-palette.png');
           const url = URL.createObjectURL(blob);

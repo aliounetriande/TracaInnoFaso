@@ -7,8 +7,7 @@ import { RouterLink } from '@angular/router';
 import { saveAs } from 'file-saver';
 import { 
   IonContent, IonHeader, IonTitle, IonToolbar, 
-  IonItem, IonButton, IonLabel, IonSelect, IonSelectOption
-} from '@ionic/angular/standalone';
+  IonItem, IonButton, IonLabel, IonSelect, IonSelectOption, IonFooter } from '@ionic/angular/standalone';
 import { Router } from '@angular/router';
 import { AuthService } from '../services/auth.service';
 
@@ -24,9 +23,9 @@ interface GtinOption {
   templateUrl: './creer-data-sachet.page.html',
   styleUrls: ['./creer-data-sachet.page.scss'],
   standalone: true,
-  imports: [
+  imports: [IonFooter, 
     IonLabel, IonItem, IonButton, IonContent, 
-    IonHeader, IonTitle, IonToolbar, CommonModule,
+    IonHeader, IonToolbar, CommonModule,
     FormsModule, ReactiveFormsModule, HttpClientModule, RouterLink, IonSelect, IonSelectOption, 
   ],
   

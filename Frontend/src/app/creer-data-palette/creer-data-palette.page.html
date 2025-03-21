@@ -2,14 +2,17 @@
   <ion-toolbar>
     <div class="header-content">
       <img src="assets/images/logo.jpg" alt="Logo" class="logo" [routerLink]="['/home']">
-      <div class="floating-menu">
+
+      <!-- Menu avec bouton Produit, Carton, Palette -->
+      <div class="menu-buttons">
         <ion-button fill="clear" [routerLink]="['/creer-data-sachet']">Produit</ion-button>
         <ion-button fill="clear" [routerLink]="['/creer-data-carton']">Carton</ion-button>
         <ion-button fill="clear" [routerLink]="['/creer-data-palette']">Palette</ion-button>
-        <ion-button fill="clear" (click)="logout()">Déconnexion</ion-button> 
       </div>
+
+      <!-- Bouton de Déconnexion, séparé des autres boutons -->
+      <ion-button fill="clear" (click)="logout()" class="logout-button">Déconnexion</ion-button>
     </div>
-    <ion-title>Générer une étiquette palette</ion-title>
   </ion-toolbar>
 </ion-header>
 
@@ -75,21 +78,29 @@
       <ion-input formControlName="totalPalettes" type="number"></ion-input>
     </ion-item>
 
-    <ion-button expand="full" type="submit" [disabled]="labelForm.invalid">Generer l'etiquette</ion-button>
+    <ion-button expand="full" type="submit" [disabled]="labelForm.invalid">Générer l'étiquette</ion-button>
   
   </form>
 
   <!--Affichage de l'image de l'étiquette -->
   <div *ngIf="imageUrl" style="margin-top: 20px; text-align: center;">
-    <h2>Image de l'étiquette</h2>
+    <h2>Aperçu de l'étiquette</h2>
     <img [src]="imageUrl" alt="">
   </div>
 
   <div *ngIf="imageUrl"  style="margin-top: 20px; text-align: center;">
     <ion-button (click)=" downloadLabel()">Télécharger en PDF</ion-button>
-    <ion-button (click)=" modifyLabel()">Modifier</ion-button>
+    <ion-button (click)=" modifyLabel()">Modifier l'étiquette</ion-button>
   </div>
   
 </ion-content>
+
+<ion-footer>
+  <ion-toolbar>
+    <div class="footer-content">
+      <p>&copy; 2025 . Tous droits réservés Groupe 2 PING ISGE 2025.</p>
+    </div>
+  </ion-toolbar>
+</ion-footer>
 
 
