@@ -10,7 +10,12 @@ import { Router } from '@angular/router';
 import { AuthService } from '../services/auth.service';
 import { saveAs } from 'file-saver';
 
-interface GtinOption {
+interface GtinOptionCarton {
+  label: string;
+  value: string;
+}
+
+interface GtinOptionSachet {
   label: string;
   value: string;
 }
@@ -28,9 +33,14 @@ export class CreerDataCartonPage {
   cartonForm: FormGroup;
   labelUrl: string | null = null;
 
-  gtinOptions: GtinOption[] = [
-    { label: 'GTIN Sachet plumpy nut', value: '6188000059007' },
-    { label: 'GTIN Carton plumpy nut', value: '6188000059008' }
+  gtinOptionsCarton: GtinOptionCarton[] = [
+    { label: 'GTIN Carton plumpy Nut', value: '6188000059007' },
+    { label: 'GTIN Carton plumpy Sup', value: '6188000059008' }
+  ];
+
+  gtinOptionsSachet: GtinOptionSachet[] = [
+    { label: 'GTIN Sachet plumpy Nut', value: '6188000059007' },
+    { label: 'GTIN Sachet plumpy Sup', value: '6188000059008' }
   ];
 
 
