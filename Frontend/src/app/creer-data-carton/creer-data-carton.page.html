@@ -1,16 +1,17 @@
 <ion-header [translucent]="true">
   <ion-toolbar>
     <div class="header-content">
+      <!-- Logo avec redirection vers la page d'accueil -->
       <img src="assets/images/logo.jpg" alt="Logo" class="logo" [routerLink]="['/home']">
 
-      <!-- Menu avec bouton Produit, Carton, Palette -->
+      <!-- Menu avec boutons pour naviguer entre Produit, Carton et Palette -->
       <div class="menu-buttons">
         <ion-button fill="clear" [routerLink]="['/creer-data-sachet']">Produit</ion-button>
         <ion-button fill="clear" [routerLink]="['/creer-data-carton']">Carton</ion-button>
         <ion-button fill="clear" [routerLink]="['/creer-data-palette']">Palette</ion-button>
       </div>
 
-      <!-- Bouton de Déconnexion, séparé des autres boutons -->
+      <!-- Bouton de déconnexion -->
       <ion-button fill="clear" (click)="logout()" class="logout-button">Déconnexion</ion-button>
     </div>
   </ion-toolbar>
@@ -18,59 +19,63 @@
 
 <ion-content class="ion-padding">
 
+  <!-- Formulaire pour la création d'une étiquette de carton -->
   <form [formGroup]="cartonForm" (ngSubmit)="generateLabel()">
+    
+    <!-- Sélection du GTIN pour le carton -->
     <ion-item>
       <ion-label position="floating">GTIN carton</ion-label>
-      <!-- <ion-input [(ngModel)]="carton.gtin" name="gtin" required></ion-input> -->
-      <ion-select formControlName="gtin" interface="popover" aria-placeholder="Selectionner un GTIN" >
+      <ion-select formControlName="gtin" interface="popover" placeholder="Sélectionner un GTIN">
         <ion-select-option *ngFor="let gtin of gtinOptionsCarton" [value]="gtin.value">
           {{ gtin.label }}
         </ion-select-option>
       </ion-select> 
-
     </ion-item>
 
+    <!-- Sélection du GTIN du contenu (GTIN du produit dans le carton) -->
     <ion-item>
       <ion-label position="floating">Content GTIN</ion-label>
-      <!-- <ion-input [(ngModel)]="carton.content_gtin" name="content_gtin" required></ion-input> -->
-      <ion-select formControlName="content_gtin" interface="popover" aria-placeholder="Selectionner un GTIN" >
+      <ion-select formControlName="content_gtin" interface="popover" placeholder="Sélectionner un GTIN">
         <ion-select-option *ngFor="let gtin of gtinOptionsSachet" [value]="gtin.value">
           {{ gtin.label }}
         </ion-select-option>
       </ion-select>
     </ion-item>
 
+    <!-- Champ batch (lot), en lecture seule car généré automatiquement -->
     <ion-item>
       <ion-label position="floating">Batch</ion-label>
-
       <ion-input formControlName="batch" required readonly></ion-input>
-
     </ion-item>
 
+    <!-- Date d'expiration, en lecture seule -->
     <ion-item>
       <ion-label position="floating">Expiry Date (JJ/MM/AA)</ion-label>
-
       <ion-input formControlName="expiry_date" required readonly></ion-input>
-
     </ion-item>
 
+    <!-- Quantité d'articles dans le carton, en lecture seule -->
     <ion-item>
       <ion-label position="floating">Quantity</ion-label>
       <ion-input type="number" formControlName="quantity" required readonly></ion-input>
-
     </ion-item>
 
+    <!-- Numéro de série, en lecture seule -->
     <ion-item>
       <ion-label position="floating">Serial Number</ion-label>
       <ion-input formControlName="serial_number" required readonly></ion-input>
     </ion-item>
 
+    <!-- Bouton pour générer l'étiquette, désactivé si le formulaire est invalide -->
     <ion-button expand="full" type="submit" [disabled]="cartonForm.invalid">Générer l'étiquette</ion-button>
   </form>
 
+  <!-- Aperçu de l'étiquette générée -->
   <div *ngIf="labelUrl">
     <h3>Aperçu de l'étiquette</h3>
     <img [src]="labelUrl" alt="Étiquette générée">
+    
+    <!-- Bouton pour télécharger l'étiquette en PDF -->
     <ion-button expand="full" (click)="downloadLabel()">Télécharger en PDF</ion-button>
   </div>
 </ion-content>
@@ -78,8 +83,8 @@
 <ion-footer>
   <ion-toolbar>
     <div class="footer-content">
+      <!-- Copyright de l'application -->
       <p>&copy; 2025 . Tous droits réservés Groupe 2 PING ISGE 2025.</p>
     </div>
   </ion-toolbar>
 </ion-footer>
-

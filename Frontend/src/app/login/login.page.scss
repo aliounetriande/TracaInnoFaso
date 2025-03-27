@@ -81,13 +81,21 @@ ion-content {
   }
   
   .login-btn {
-    --background: #4a90e2;
-    --background-hover: #3a80d2;
+    --background: greenyellow;
+    --background-hover: greenyellow;
     --border-radius: 5px;
     --padding-top: 0.8rem;
     --padding-bottom: 0.8rem;
     font-weight: 600;
     margin-top: 1rem;
+  }
+
+  .visibilite-btn{
+    --background: white;
+    --color: black !important;
+    --padding-top: 25px;
+    font-weight: 200;
+    font-size: small;
   }
   
   .forgot-password {

@@ -11,7 +11,7 @@
     <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
       <div class="input-group">
         <ion-item>
-          <ion-label position="stacked">Identifiant</ion-label>
+          <ion-label position="stacked">Nom d'utilisateur</ion-label>
           <ion-input type="text" formControlName="username"></ion-input>
         </ion-item>
         <p class="error-message" *ngIf="username?.invalid && username?.touched">
@@ -22,8 +22,11 @@
       <div class="input-group">
         <ion-item>
           <ion-label position="stacked">Mot de passe</ion-label>
-          <ion-input type="password" formControlName="password"></ion-input>
+          <ion-input [type]="showPassword ? 'text' : 'password'" formControlName="password"></ion-input>
         </ion-item>
+        <ion-button fill="clear" (click)="togglePasswordVisibility()" class="visibilite-btn">
+          Afficher / Masquer le mot de passe
+        </ion-button>
         <p class="error-message" *ngIf="password?.invalid && password?.touched">
           Veuillez entrer votre mot de passe
         </p> 

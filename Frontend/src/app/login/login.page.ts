@@ -6,21 +6,17 @@ import { ToastController } from '@ionic/angular';
 import { AuthService } from '../services/auth.service';
 import {
   IonContent,
-  IonHeader,
-  IonTitle,
-  IonToolbar,
   IonItem,
   IonLabel,
   IonInput,
-  IonButton,
-} from '@ionic/angular/standalone';
+  IonButton } from '@ionic/angular/standalone';
 
 @Component({
   selector: 'app-login',
   templateUrl: './login.page.html',
   styleUrls: ['./login.page.scss'],
   standalone: true,
-  imports: [
+  imports: [ 
     CommonModule,
     FormsModule,
     IonContent,
@@ -33,6 +29,7 @@ import {
 })
 export class LoginPage {
   loginForm: FormGroup;
+  showPassword = false; // État du mot de passe (visible ou masqué)
 
   constructor(
     private fb: FormBuilder,
@@ -84,5 +81,10 @@ export class LoginPage {
 
   get password() {
     return this.loginForm.get('password');
+  }
+
+  // Fonction pour basculer l'affichage du mot de passe
+  togglePasswordVisibility() {
+    this.showPassword = !this.showPassword;
   }
 }
