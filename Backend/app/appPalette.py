@@ -2,8 +2,10 @@ from flask import Flask, Blueprint, request, send_file
 from pylibdmtx.pylibdmtx import encode
 from PIL import Image, ImageDraw, ImageFont
 from flask_cors import CORS
-from flask_jwt_extended import jwt_required
+from flask_jwt_extended import get_jwt_identity, jwt_required
 import io
+
+from app.auth import User
 
 
 
@@ -15,6 +17,15 @@ palette_bp = Blueprint('palette', __name__)
 @palette_bp.route('/generate-label', methods=['POST'])
 @jwt_required()
 def generate_label():
+
+    user_id =get_jwt_identity()
+    user= User.query.get(user_id) 
+
+    data = request.get_json()
+    signature = user.username
+
+    data['created_by'] = signature
+
     data = request.json
     sscc = data.get("sscc", " ")
     content_gtin = data.get("content_gtin", " ")
@@ -68,7 +79,9 @@ def generate_label():
     draw.text((900, 1050), f"(37) {quantity}", font=font, fill="black")
     draw.text((900, 1100), f"(241) {number_part_cust}", font=font, fill="black")
     draw.text((900, 1150), f"(400)) {order_number}", font=font, fill="black")
-    draw.text((1473, 1175), f"{totalPalettes}", font=font, fill="black")
+    draw.text((1473, 1190), f"{totalPalettes}", font=font, fill="black")
+    draw.text((1100, 1190), f"Par : {signature}", font=font, fill="black")
+
 
     dm_data = f"SSCC:{sscc};CONTENT GTIN:{content_gtin};BATCH:{batch};EXP:{expiry_date};PROD DATE:{prod_date};QTY:{quantity};ORDER:{order_number};CUST PART NUMBER:{number_part_cust}; INDEX:{totalPalettes};"
     encoded = encode(dm_data.encode('utf-8'))
