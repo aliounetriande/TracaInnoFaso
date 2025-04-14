@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Router } from '@angular/router';
 
@@ -24,9 +24,16 @@ export class AuthService {
    * Stocke le token d'authentification dans le localStorage.
    * @param token - Le token JWT renvoyé par l'API après connexion.
    */
-  saveToken(token: string): void {
+  saveSession(token: string, role: string): void {
     localStorage.setItem('token', token);
+    localStorage.setItem('role', role);
   }
+
+  getUserRole(): string | null {
+    return localStorage.getItem('role');
+  }
+  
+  
 
   /**
    * Récupère le token stocké dans le localStorage.
@@ -39,10 +46,23 @@ export class AuthService {
   /**
    * Déconnecte l'utilisateur en supprimant son token et en le redirigeant vers la page de connexion.
    */
-  logout(): void {
-    localStorage.removeItem('token'); // Suppression du token
-    this.router.navigate(['/login']); // Redirection vers la page de connexion
+
+  logout(): Observable<any> {
+    const token = localStorage.getItem('token');
+    
+    if (!token) {
+      throw new Error('Aucun token trouvé');
+    }
+
+    const headers = new HttpHeaders({
+      Authorization: `Bearer ${token}`
+    });
+
+    return this.http.post(`${this.apiUrl}/logout`, {}, { headers });
   }
+
+  
+ 
 
   /**
    * Vérifie si l'utilisateur est authentifié en testant la présence d'un token.

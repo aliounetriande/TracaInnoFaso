@@ -54,7 +54,17 @@ export class HomePage implements AfterViewInit {
   }
 
   logout() {
-    this.authService.logout(); // Appel de la méthode logout du service
-    this.router.navigate(['/login']); // Redirection vers la page de connexion
+    this.authService.logout().subscribe({
+      next: () => {
+        // Effacer le token du localStorage
+        localStorage.removeItem('token');
+  
+        // Rediriger vers la page de connexion
+        this.router.navigate(['/login']);
+      },
+      error: (err) => {
+        console.error('Erreur lors de la déconnexion :', err);
+      }
+    });
   }
 }

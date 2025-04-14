@@ -1,5 +1,6 @@
 import { Routes } from '@angular/router';
 import { AuthGuard } from './guards/auth.guard';  // Assure-toi d'importer le guard
+import { RoleGuard } from './guards/role.guard';
 
 export const routes: Routes = [
   {
@@ -23,13 +24,15 @@ export const routes: Routes = [
   },
   {
     path: 'creer-data-palette',
-    loadComponent: () => import('./creer-data-palette/creer-data-palette.page').then( m => m.CreerDataPalettePage),
-    canActivate: [AuthGuard],  // Protège cette route
+    loadComponent: () => import('./creer-data-palette/creer-data-palette.page').then(m => m.CreerDataPalettePage),
+    canActivate: [AuthGuard, RoleGuard],
+    data: { roles: ['palette', 'admin'] } // Autorisé pour les "palette" et les "admin"
   },
   {
     path: 'creer-data-carton',
-    loadComponent: () => import('./creer-data-carton/creer-data-carton.page').then( m => m.CreerDataCartonPage),
-    canActivate: [AuthGuard],  // Protège cette route
+    loadComponent: () => import('./creer-data-carton/creer-data-carton.page').then(m => m.CreerDataCartonPage),
+    canActivate: [AuthGuard, RoleGuard],
+    data: { roles: ['carton', 'admin'] } // Autorisé pour les "carton" et les "admin"
   },
   
 ];

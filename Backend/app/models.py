@@ -10,12 +10,14 @@ class User(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(50), unique=True, nullable=False)
     password_hash = db.Column(db.String(256), nullable=False)
+    role = db.Column(db.String(20), nullable=False)  # "carton", "palette" ou "admin"
     created_at = db.Column(db.DateTime, default=datetime.utcnow)  # Date d'inscription
     is_logged_in = db.Column(db.Boolean, default=False) # Indique si l'utilisateur est connecté
 
-    def __init__(self, username, password_hash, created_at=None, is_logged_in=False):
+    def __init__(self, username, password_hash, role, created_at=None, is_logged_in=False):
         self.username = username
         self.password_hash = password_hash
+        self.role = role
         self.created_at = created_at if created_at else datetime.utcnow()
         self.is_logged_in = is_logged_in
 
@@ -30,6 +32,13 @@ class User(db.Model):
       result = bcrypt.check_password_hash(self.password_hash, password)
       print("Résultat de la comparaison:", result)
       return result
+    
+
 
     def __repr__(self):
         return f"<User {self.username}>"
+    
+    def __repr__(self):
+      return f"<User {self.username}, role={self.role}>"
+
+    

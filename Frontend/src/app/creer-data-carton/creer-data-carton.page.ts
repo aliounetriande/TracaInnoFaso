@@ -153,7 +153,15 @@ export class CreerDataCartonPage {
 
   // Déconnexion de l'utilisateur
   logout() {
-    this.authService.logout();
-    this.router.navigate(['/login']);
+    this.authService.logout().subscribe({
+      next: () => {
+        localStorage.removeItem('token');
+        this.router.navigate(['/login']);
+      },
+      error: (err) => {
+        console.error('Erreur lors de la déconnexion :', err);
+      }
+    });
   }
+  
 }

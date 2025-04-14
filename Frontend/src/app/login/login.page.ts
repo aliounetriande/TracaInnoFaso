@@ -55,7 +55,7 @@ export class LoginPage {
 
     this.authService.login({ username, password }).subscribe({
       next: (response) => {
-        this.authService.saveToken(response.token);
+        this.authService.saveSession(response.token, response.role); ;
         this.router.navigate(['/home']); // Redirige après connexion
       },
       error: () => {
